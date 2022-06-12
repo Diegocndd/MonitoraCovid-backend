@@ -6,6 +6,7 @@ const { addUser } = userDB;
 const { addRoom, getRooms } = roomDB;
 const {
   addReservation,
+  deleteReservation,
   getReservationsByUser,
   getReservationsByRoom
 } = reservationDB;
@@ -15,6 +16,7 @@ module.exports = {
   addRoom,
   getRooms,
   addReservation,
+  deleteReservation,
   getReservationsByUser,
   getReservationsByRoom,
 };

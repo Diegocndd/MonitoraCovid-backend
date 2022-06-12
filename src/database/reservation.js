@@ -30,8 +30,17 @@ const getReservationsByRoom = (roomId, callback) => {
   });
 };
 
+const deleteReservation = (idReservation) => {
+  const sql = `DELETE FROM reservation WHERE id_reservation=${idReservation};`;
+
+  con.query(sql, function (err, res) {
+    if (err) throw err;
+  });
+};
+
 module.exports = {
   addReservation,
+  deleteReservation,
   getReservationsByUser,
   getReservationsByRoom,
 }

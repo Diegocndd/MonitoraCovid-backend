@@ -82,6 +82,11 @@ app.get('/get-rooms', (req, res) => {
     });
 });
 
+app.post('/delete-reservation', (req, res) => {
+    database.deleteReservation(req.body.id_reservation);
+    res.status(200).send('Reservation deleted');
+});
+
 app.listen(port, () => {
     console.log('Servidor rodando na porta ' + port);
 });
