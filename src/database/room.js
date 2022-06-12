@@ -15,6 +15,19 @@ const addRoom = (data) => {
   });
 };
 
+const getRooms = (callback) => {
+  const sql = 'SELECT * FROM room;';
+
+  con.query(sql, (err, res) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  });
+}
+
 module.exports = {
   addRoom,
+  getRooms,
 }
