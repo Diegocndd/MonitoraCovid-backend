@@ -1,6 +1,6 @@
 const {con} = require('./config');
 
-const addRoom = (data) => {
+const addRoom = (data, callback) => {
   const { name, max_amount, required_appointment, delay_tolerance } = data;
   let sql;
 
@@ -11,7 +11,19 @@ const addRoom = (data) => {
   }
 
   con.query(sql, function (err, res) {
-    if (err) throw err;
+    if (err){
+      if (typeof(name) != 'string') {
+        callback("invalid type for name", false);
+      } else if (typeof(max_amount) != 'number') {
+        callback("invalid type for max_amount", false);
+      } else if (typeof(required_appointment) != 'boolean') {
+        callback("invalid type for required_appointment", false);
+      } else if (typeof(delay_tolerance) != 'int') {
+        callback("invalid type for delay_tolerance", false);
+      } else {
+        callback(err, false);
+      }
+    }
   });
 };
 
