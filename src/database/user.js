@@ -18,6 +18,8 @@ const addUser = (data, callback) => {
         } else {
           callback(err, false);
         }
+      } else {
+        callback(null, res)
       }
   });
 };

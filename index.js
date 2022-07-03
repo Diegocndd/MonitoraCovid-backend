@@ -19,10 +19,9 @@ app.post('/register', (req, res) => {
     database.addUser(req.body, (err, result) => {
         if (err){
             res.status(400).send(err)
-        }else{
-            res.status(200).send('User added');
-        }
+        }else{res.status(200).send('User added');}
     });
+    
 });
 
 app.post('/create-room', (req, res) => {
@@ -34,9 +33,7 @@ app.post('/create-room', (req, res) => {
     database.addRoom(req.body, (err, result) => {
         if (err) {
             res.status(400).send(err);
-        }else{
-            res.status(200).send('Room added');
-        }
+        }else {res.status(200).send('Room added');}
     });
     
 });
@@ -56,9 +53,7 @@ app.post('/create-reservation', (req, res) => {
         if (err) {
             res.status(400).send(err);
             return;
-        } else {
-            res.status(200).send('Reservation added');
-        }
+        }else{res.status(200).send('Reservation added');}
     });
     
 });
