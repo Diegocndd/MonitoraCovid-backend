@@ -16,8 +16,12 @@ app.post('/register', (req, res) => {
      * 1. Verificar se os tipos que chegam no endpoint estão corretos
      * 2. Retornar o código correto
      */
-    database.addUser(req.body);
-    res.status(200).send('User added');
+    database.addUser(req.body, (err, result) => {
+        if (err){
+            res.status(400).send(err)
+        }else{res.status(200).send('User added');}
+    });
+    
 });
 
 app.post('/create-room', (req, res) => {
@@ -26,8 +30,12 @@ app.post('/create-room', (req, res) => {
      * 1. Verificar se os tipos que chegam no endpoint estão corretos
      * 2. Retornar o código correto
      */
-    database.addRoom(req.body);
-    res.status(200).send('Room added');
+    database.addRoom(req.body, (err, result) => {
+        if (err) {
+            res.status(400).send(err);
+        }else {res.status(200).send('Room added');}
+    });
+    
 });
 
 app.post('/create-reservation', (req, res) => {
@@ -41,15 +49,20 @@ app.post('/create-reservation', (req, res) => {
      * 1. Verificar se os tipos que chegam no endpoint estão corretos
      * 2. Retornar o código correto
      */
-    database.addReservation(req.body);
-    res.status(200).send('Reservation added');
+    database.addReservation(req.body, (err, result) => {
+        if (err) {
+            res.status(400).send(err);
+            return;
+        }else{res.status(200).send('Reservation added');}
+    });
+    
 });
 
 app.get('/get-reservations', (req, res) => {
     if (req.query.user) {
         database.getReservationsByUser(req.query.user, (err, result) => {
             if (err) {
-                res.status(400).send('Server error');
+                res.status(400).send(err);
                 return;
             }
             res.setHeader('Content-Type', 'application/json');
@@ -59,7 +72,7 @@ app.get('/get-reservations', (req, res) => {
     } else if (req.query.room) {
         database.getReservationsByRoom(req.query.room, (err, result) => {
             if (err) {
-                res.status(400).send('Server error');
+                res.status(400).send(err);
                 return;
             }
             res.setHeader('Content-Type', 'application/json');
@@ -74,7 +87,7 @@ app.get('/get-reservations', (req, res) => {
 app.get('/get-rooms', (req, res) => {
     database.getRooms((err, result) => {
         if (err) {
-            res.status(400).send('Server error');
+            res.status(400).send(err);
         } else {
             res.status(200).json(result);
         }
