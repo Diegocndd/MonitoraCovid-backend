@@ -3,12 +3,13 @@ const roomDB = require('./room');
 const reservationDB = require('./reservation');
 
 const { addUser } = userDB;
-const { addRoom, getRooms } = roomDB;
+const { addRoom, getRooms, getTolerance, } = roomDB;
 const {
   addReservation,
   deleteReservation,
   getReservationsByUser,
-  getReservationsByRoom
+  getReservationsByRoom,
+  confirmReservation,
 } = reservationDB;
 
 module.exports = {
@@ -19,4 +20,6 @@ module.exports = {
   deleteReservation,
   getReservationsByUser,
   getReservationsByRoom,
+  confirmReservation,
+  getTolerance,
 };

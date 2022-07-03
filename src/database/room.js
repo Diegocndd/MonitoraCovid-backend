@@ -15,6 +15,16 @@ const addRoom = (data) => {
   });
 };
 
+const getTolerance = (id_room, callback) => {
+  const sql = `SELECT delay_tolerance FROM room WHERE id_room=${id_room};`;
+
+  con.query(sql, function (err, res) {
+    if (res && res.length > 0) {
+      callback(null, res[0].delay_tolerance);
+    }
+  });
+}
+
 const getRooms = (callback) => {
   const sql = 'SELECT * FROM room;';
 
@@ -30,4 +40,5 @@ const getRooms = (callback) => {
 module.exports = {
   addRoom,
   getRooms,
+  getTolerance,
 }
