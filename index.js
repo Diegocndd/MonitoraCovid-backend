@@ -98,6 +98,16 @@ app.post('/enter-room', (req, res) => {
     });
 });
 
+app.post('/login', (req, res) => {
+    database.loginUser(req.body, (err, result) => {
+        if (err) {
+            res.status(400).send('Username or password incorret');
+        } else if (result) {
+            res.status(200).send(result);
+        }
+    });
+})
+
 app.listen(port, () => {
     /**
      * Converter para fuso certo
