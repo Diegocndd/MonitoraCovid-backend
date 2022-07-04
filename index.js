@@ -87,6 +87,22 @@ app.post('/delete-reservation', (req, res) => {
     res.status(200).send('Reservation deleted');
 });
 
+app.post('/enter-room', (req, res) => {
+    database.confirmReservation(req.body, (err, result) => {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            res.status(200).send('Acesso liberado!');
+        }
+        console.log(err);
+    });
+});
+
 app.listen(port, () => {
+    /**
+     * Converter para fuso certo
+     * var d = new Date();
+     * d.setTime( d.getTime() - d.getTimezoneOffset()*60*1000 );
+     */
     console.log('Servidor rodando na porta ' + port);
 });
