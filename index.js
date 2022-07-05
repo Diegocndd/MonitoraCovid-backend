@@ -94,7 +94,6 @@ app.post('/enter-room', (req, res) => {
         } else {
             res.status(200).send('Acesso liberado!');
         }
-        console.log(err);
     });
 });
 

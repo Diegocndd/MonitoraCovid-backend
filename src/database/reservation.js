@@ -4,10 +4,47 @@ const {getTolerance} = require('./room');
 const addReservation = (data) => {
   const { start_time, end_time, id_user, id_room } = data;
   const sql = `INSERT INTO reservation (start_time, end_time, id_user, id_room) VALUES ('${start_time}', '${end_time}', ${id_user}, ${id_room});`
+
+  limitRoom(id_room, (err, result) => {
+    if (result) {
+      removeActualAmount(id_room);
+      con.query(sql, function (err2, res2) {
+        if (err) throw err;
+      })
+    }
+  })
+};
+
+const removeActualAmount = (idRoom) => {
+  const sql = `UPDATE room SET actual_amount=actual_amount-1 WHERE id_room=${idRoom};`;
+
   con.query(sql, function (err, res) {
     if (err) throw err;
   });
-};
+}
+
+const addActualAmount = (idRoom) => {
+  const sql = `UPDATE room SET actual_amount=actual_amount+1 WHERE id_room=${idRoom};`;
+
+  con.query(sql, function (err, res) {
+    // if (err) throw err;
+  });
+}
+
+const limitRoom = (idRoom, callback) => {
+  const sql = `SELECT actual_amount, max_amount FROM room WHERE id_room=${idRoom}`;
+
+  con.query(sql, function (err, res) {
+    if (res.length > 0) {
+      const {actual_amount} = res[0];
+      if (Number(actual_amount) === 0) {
+        callback(true, false);
+      } else {
+        callback(false, true);
+      }
+    }
+  })
+}
 
 const getReservationsByUser = (userId, callback) => {
   const sql = `SELECT * FROM reservation WHERE id_user=${Number(userId)};`;
@@ -29,16 +66,6 @@ const getReservationsByRoom = (roomId, callback) => {
       callback(null, res);
     }
   });
-};
-
-function subtractHours(numOfHours, date = new Date()) {
-  date.setHours(date.getHours() - numOfHours);
-
-  return date;
-}
-
-const ISOStringToNormalDate = (oldDate) => {
-  return oldDate.split('T')[0] + ' ' + oldDate.split('T')[1].split('.')[0];
 };
 
 // confirma se existe reserva e se ela pode ser executada naquele momento
@@ -65,6 +92,7 @@ const confirmReservation = ({id_user, id_room}, callback) => {
             callback('Acesso liberado!', null);
           } else {
             deleteReservation(id_reservation);
+            addActualAmount(id_room);
             callback('O prazo de entrada está expirado!', null);
           }
         });

@@ -7,7 +7,7 @@ const addRoom = (data) => {
   if (delay_tolerance) {
     sql = `INSERT INTO room (name, required_appointment, max_amount, delay_tolerance) VALUES ('${name}', ${required_appointment}, ${max_amount}, ${delay_tolerance});`
   } else {
-    sql = `INSERT INTO room (name, required_appointment, max_amount) VALUES ('${name}', ${required_appointment}, ${max_amount});`
+    sql = `INSERT INTO room (name, required_appointment, max_amount, actual_amount) VALUES ('${name}', ${required_appointment}, ${max_amount}, ${max_amount});`
   }
 
   con.query(sql, function (err, res) {
