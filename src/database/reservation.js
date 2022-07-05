@@ -54,8 +54,8 @@ const confirmReservation = ({id_user, id_room}, callback) => {
       const timeNow = new Date();
       const timeStart = new Date(start_time);
 
-      timeStart.setHours(timeStart.getHours() - 3);
-      timeNow.setHours(timeNow.getHours() - 3);
+      // timeStart.setHours(timeStart.getHours() - 3);
+      // timeNow.setHours(timeNow.getHours() - 3);
 
       if (timeNow.getTime() > timeStart.getTime()) {
         getTolerance(id_room, (err2, result) => {
