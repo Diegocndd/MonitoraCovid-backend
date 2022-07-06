@@ -100,6 +100,17 @@ app.post('/delete-reservation', (req, res) => {
     res.status(200).send('Reservation deleted');
 });
 
+app.post('/upload', (req, res) => {
+
+    database.validateFile(req.body, (err, result) => {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            res.status(200).send("Exame enviado com sucesso!");
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log('Servidor rodando na porta ' + port);
 });

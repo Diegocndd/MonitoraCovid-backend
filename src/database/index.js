@@ -2,7 +2,7 @@ const userDB = require('./user');
 const roomDB = require('./room');
 const reservationDB = require('./reservation');
 
-const { addUser } = userDB;
+const { addUser, validateFile } = userDB;
 const { addRoom, getRooms } = roomDB;
 const {
   addReservation,
@@ -13,6 +13,7 @@ const {
 
 module.exports = {
   addUser,
+  validateFile,
   addRoom,
   getRooms,
   addReservation,

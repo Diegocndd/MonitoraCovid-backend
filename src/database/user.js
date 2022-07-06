@@ -24,6 +24,18 @@ const addUser = (data, callback) => {
   });
 };
 
+const validateFile = (data, callback) => {
+  const { fileName } = data;
+  let ext = fileName.split(".")[1];
+  if (["jpeg", "png", "pdf"].indexOf(ext) < 0 ) {
+    yield err;
+  }else {
+    return 1;
+  }
+
+};
+
 module.exports = {
   addUser,
+  validateFile,
 }
