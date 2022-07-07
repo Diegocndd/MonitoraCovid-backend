@@ -12,7 +12,7 @@ const addReservation = (data) => {
         if (err) throw err;
       })
     }
-  })
+  });
 };
 
 const removeActualAmount = (idRoom) => {
@@ -81,12 +81,18 @@ const confirmReservation = ({id_user, id_room}, callback) => {
       const timeNow = new Date();
       const timeStart = new Date(start_time);
 
-      // timeStart.setHours(timeStart.getHours() - 3);
-      // timeNow.setHours(timeNow.getHours() - 3);
+      timeStart.setHours(timeStart.getHours() + 3);
+      timeNow.setHours(timeNow.getHours() - 3);
 
-      if (timeNow.getTime() > timeStart.getTime()) {
+      if (Number(timeNow.getTime()) > Number(timeStart.getTime())) {
         getTolerance(id_room, (err2, result) => {
-          const toleranceTime = new Date(timeStart.getTime() + (Number(result) / 60) * 60000);
+          let toleranceTime;
+          if (result) {
+            toleranceTime = new Date(timeStart.getTime() + (Number(result) / 60) * 60000);
+          } else {
+            toleranceTime = new Date(timeStart.getTime() + (Number(900) / 60) * 60000);
+          }
+
           if (timeNow.getTime() < toleranceTime.getTime()) {
             activeReservation(id_reservation);
             callback('Acesso liberado!', null);
